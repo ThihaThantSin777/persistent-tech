@@ -21,7 +21,14 @@ class UserModel {
       .startWith(UserDAOHiveImpl().getUserDataStream)
       .map((event) => _userDAO.getUser(1));
 
+
+  void closeStream() {
+    _userStream.close();
+  }
+
+
   Future<void> saveUserWithAsync({bool isUsedSharePreferences = false}) async {
+
     await Future.delayed(const Duration(seconds: 3));
     final userData = UserVO(1, "Mg Mg", 21);
     save(userData, isAddedUserStream: isUsedSharePreferences);
