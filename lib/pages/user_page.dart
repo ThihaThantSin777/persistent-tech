@@ -17,7 +17,9 @@ class _UserPageState extends State<UserPage> {
 
   @override
   void initState() {
-    _userModel.saveUserWithAsync();
+    Future.delayed(const Duration(seconds: 3), () {
+      _userModel.save(UserVO(1, "Mg Mg", 23));
+    });
     super.initState();
   }
 
@@ -83,13 +85,7 @@ class _UserPageState extends State<UserPage> {
                 stream: _userModel.getUserStream,
                 builder: (_, snapShot) {
                   if (snapShot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                        child: Text(
-                      _userModel.getUser != null
-                          ? _userModel.getUser.toString()
-                          : '',
-                      style: const TextStyle(color: Colors.black),
-                    ));
+                    return const Center(child: CircularProgressIndicator());
                   }
                   if (snapShot.hasError) {
                     return Center(
