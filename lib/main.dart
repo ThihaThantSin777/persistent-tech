@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:persistent/data/vo/user_vo.dart';
 import 'package:persistent/pages/home_page.dart';
 import 'package:persistent/pages/user_page.dart';
 import 'package:persistent/persistent/dao/pref_instance.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:persistent/persistent/hive_constant.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
   await PrefInstance.createSharePreferencesInstance();
+
+  Hive.registerAdapter(UserVOAdapter());
+
+  await Hive.openBox<int>(kHiveCountBox);
+  await Hive.openBox<UserVO>(kHiveUserVOBox);
   runApp(const MyApp());
 }
 
@@ -22,7 +31,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: UserPage(),
-      //     home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      //   home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
