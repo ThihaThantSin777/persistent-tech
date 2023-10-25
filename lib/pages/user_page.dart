@@ -17,7 +17,7 @@ class _UserPageState extends State<UserPage> {
 
   @override
   void initState() {
-    _userModel.saveUserWithAsync();
+    _userModel.saveUserWithAsync(isUsedSharePreferences: true);
     super.initState();
   }
 

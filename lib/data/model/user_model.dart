@@ -5,6 +5,8 @@ import 'package:persistent/persistent/dao/user_dao/user_dao.dart';
 import 'package:persistent/persistent/dao/user_dao/user_dao_hive_impl.dart';
 import 'package:stream_transform/stream_transform.dart';
 
+import '../../persistent/dao/user_dao/user_dao_share_preference_impl.dart';
+
 class UserModel {
   UserModel._();
 
@@ -12,19 +14,10 @@ class UserModel {
 
   factory UserModel() => _singleton;
 
-  // final UserDAO _userDAO = UserDAOSharePreferenceImpl();
+  final UserDAO _userDAO = UserDAOSharePreferenceImpl();
 
-  final UserDAO _userDAO = UserDAOHiveImpl();
-
-  Stream<UserVO?> get getUserStream => UserDAOHiveImpl()
-      .watchUserBox()
-      .startWith(UserDAOHiveImpl().getUserDataStream)
-      .map((event) => _userDAO.getUser(1));
-
-  //
-  // void closeStream() {
-  //   _userStream.close();
-  // }
+  Stream<UserVO?> get getUserStream =>
+      UserDAOSharePreferenceImpl().getUserStream;
 
   Future<void> saveUserWithAsync({bool isUsedSharePreferences = false}) async {
     await Future.delayed(const Duration(seconds: 3));

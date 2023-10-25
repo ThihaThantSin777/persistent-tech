@@ -9,8 +9,8 @@ class CountModel {
 
   factory CountModel() => _singleton;
 
-  //final CountDAO _countDAO = CountDAOSharePreferencesImpl();
-  final CountDAO _countDAO = CountDAOHiveImpl();
+  final CountDAO _countDAO = CountDAOSharePreferencesImpl();
+  // final CountDAO _countDAO = CountDAOHiveImpl();
 
   void saveCountValue(int countValue) {
     _countDAO.saveCountValue(countValue);

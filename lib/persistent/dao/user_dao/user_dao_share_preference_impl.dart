@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:persistent/data/vo/user_vo.dart';
@@ -12,6 +13,10 @@ class UserDAOSharePreferenceImpl extends UserDAO {
       UserDAOSharePreferenceImpl._();
 
   factory UserDAOSharePreferenceImpl() => _singleton;
+
+  final StreamController<UserVO?> _userStream = StreamController<UserVO?>();
+
+  Stream<UserVO?> get getUserStream => _userStream.stream;
 
   @override
   void save(UserVO userVO, {bool isAddedUserStream = false}) {
