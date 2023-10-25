@@ -14,7 +14,7 @@ class UserDAOSharePreferenceImpl extends UserDAO {
   factory UserDAOSharePreferenceImpl() => _singleton;
 
   @override
-  void save(UserVO userVO) {
+  void save(UserVO userVO, {bool isAddedUserStream = false}) {
     PrefInstance.getSharedPreferences.setString(kUserKey, jsonEncode(userVO));
   }
 

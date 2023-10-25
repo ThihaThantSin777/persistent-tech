@@ -26,6 +26,10 @@ class UserDAOHiveImpl extends UserDAO {
     }
   }
 
+  Stream<UserVO?> get getUserDataStream => Stream.value(getUser(1));
+
+  Stream<void> watchUserBox() => _getUserBox().watch();
+
   Stream<UserVO?> get getUserStream => _userStream.stream;
 
   Box<UserVO> _getUserBox() => Hive.box<UserVO>(kHiveUserVOBox);
