@@ -16,6 +16,10 @@ class UserModel {
 
   Stream<UserVO?> get getUserStream => _userStream.stream;
 
+  void closeStream() {
+    _userStream.close();
+  }
+
   Future<void> saveUserWithAsync() async {
     await Future.delayed(const Duration(seconds: 3));
     final userData = UserVO(1, "Mg Mg", 21);

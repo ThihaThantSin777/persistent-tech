@@ -22,6 +22,12 @@ class _UserPageState extends State<UserPage> {
   }
 
   @override
+  void dispose() {
+    _userModel.closeStream();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
