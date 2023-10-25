@@ -16,6 +16,12 @@ class _UserPageState extends State<UserPage> {
   final UserModel _userModel = UserModel();
 
   @override
+  void initState() {
+    _userModel.saveUserWithAsync();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -65,12 +71,38 @@ class _UserPageState extends State<UserPage> {
             const SizedBox(
               height: 50,
             ),
+            // Center(
+            //   child: Text(
+            //     _userModel.getUser != null ? _userModel.getUser.toString() : '',
+            //     style: const TextStyle(color: Colors.black),
+            //   ),
+            // ),
+
             Center(
-              child: Text(
-                _userModel.getUser != null ? _userModel.getUser.toString() : '',
-                style: const TextStyle(color: Colors.black),
+              child: StreamBuilder<UserVO?>(
+                stream: _userModel.getUserStream,
+                builder: (_, snapShot) {
+                  if (snapShot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                        child: Text(
+                      _userModel.getUser != null
+                          ? _userModel.getUser.toString()
+                          : '',
+                      style: const TextStyle(color: Colors.black),
+                    ));
+                  }
+                  if (snapShot.hasError) {
+                    return Center(
+                      child: Text(snapShot.error.toString()),
+                    );
+                  }
+                  return Text(
+                    snapShot.data.toString(),
+                    style: const TextStyle(color: Colors.black),
+                  );
+                },
               ),
-            ),
+            )
           ],
         ),
       ),
