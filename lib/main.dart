@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:persistent/pages/home_page.dart';
+import 'package:persistent/pages/user_page.dart';
 import 'package:persistent/persistent/dao/pref_instance.dart';
 
 void main() async {
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: UserPage(),
+      //     home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
