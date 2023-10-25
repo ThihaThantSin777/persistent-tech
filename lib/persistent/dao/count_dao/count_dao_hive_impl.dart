@@ -3,8 +3,13 @@ import 'package:hive/hive.dart';
 import 'package:persistent/persistent/hive_constant.dart';
 
 class CountDAOHiveImpl extends CountDAO {
+  CountDAOHiveImpl._();
+
+  static final CountDAOHiveImpl _singleton = CountDAOHiveImpl._();
+
+  factory CountDAOHiveImpl() => _singleton;
+
   @override
-  // TODO: implement getCountValue
   int? get getCountValue => _getCountBox().get(kHiveCountKey);
 
   @override
