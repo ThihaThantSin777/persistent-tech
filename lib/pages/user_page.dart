@@ -23,7 +23,7 @@ class _UserPageState extends State<UserPage> {
 
   @override
   void dispose() {
-    _userModel.closeStream();
+    //   _userModel.closeStream();
     super.dispose();
   }
 
