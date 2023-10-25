@@ -15,15 +15,12 @@ class UserModel {
 
   final UserDAO _userDAO = UserDAOHiveImpl();
 
-  final StreamController<UserVO?> _userStream = StreamController<UserVO?>();
-
-  Stream<UserVO?> get getUserStream => _userStream.stream;
+  Stream<UserVO?> get getUserStream => UserDAOHiveImpl().getUserStream;
 
   Future<void> saveUserWithAsync() async {
     await Future.delayed(const Duration(seconds: 3));
     final userData = UserVO(1, "Mg Mg", 21);
     save(userData);
-    _userStream.sink.add(userData);
   }
 
   void save(UserVO userVO) => _userDAO.save(userVO);
