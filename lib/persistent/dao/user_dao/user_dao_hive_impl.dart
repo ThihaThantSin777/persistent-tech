@@ -6,8 +6,6 @@ import 'package:persistent/persistent/dao/user_dao/user_dao.dart';
 import 'package:persistent/persistent/hive_constant.dart';
 
 class UserDAOHiveImpl extends UserDAO {
-  final StreamController<UserVO?> _userStream = StreamController<UserVO?>();
-
   UserDAOHiveImpl._();
 
   static final UserDAOHiveImpl _singleton = UserDAOHiveImpl._();
@@ -15,18 +13,12 @@ class UserDAOHiveImpl extends UserDAO {
   factory UserDAOHiveImpl() => _singleton;
 
   @override
-  // TODO: implement getUser
-  UserVO? getUser([int? id]) => _getUserBox().get(id ?? 0);
+  UserVO? getUser() => _getUserBox().get(1);
 
   @override
-  void save(UserVO userVO, {bool isAddedUserStream = false}) {
+  void save(UserVO userVO) {
     _getUserBox().put(userVO.id, userVO);
-    if (isAddedUserStream) {
-      _userStream.sink.add(userVO);
-    }
   }
-
-  Stream<UserVO?> get getUserStream => _userStream.stream;
 
   Box<UserVO> _getUserBox() => Hive.box<UserVO>(kHiveUserVOBox);
 }

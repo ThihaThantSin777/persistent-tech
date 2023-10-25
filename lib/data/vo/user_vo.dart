@@ -3,7 +3,9 @@ import 'package:persistent/persistent/hive_constant.dart';
 
 part 'user_vo.g.dart';
 
-@HiveType(typeId: kHiveTypeIDForUserVo)
+@HiveType(
+  typeId: kHiveTypeIDForUserVo,
+)
 class UserVO {
   @HiveField(0)
   int id;
