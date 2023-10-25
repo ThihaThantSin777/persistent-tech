@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:persistent/data/vo/user_vo.dart';
 import 'package:persistent/pages/home_page.dart';
 import 'package:persistent/pages/user_page.dart';
 import 'package:persistent/persistent/dao/pref_instance.dart';
@@ -10,7 +11,10 @@ void main() async {
   await Hive.initFlutter();
   await PrefInstance.createSharePreferencesInstance();
 
+  Hive.registerAdapter(UserVOAdapter());
+
   await Hive.openBox<int>(kHiveCountBox);
+  await Hive.openBox<UserVO>(kHiveUserVOBox);
   runApp(const MyApp());
 }
 
@@ -26,8 +30,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: UserPage(),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: UserPage(),
+      //   home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
