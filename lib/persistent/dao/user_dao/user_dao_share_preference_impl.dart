@@ -7,7 +7,9 @@ import 'package:persistent/persistent/dao/user_dao/user_dao.dart';
 import 'package:persistent/persistent/preference_key_constant.dart';
 
 class UserDAOSharePreferenceImpl extends UserDAO {
-  UserDAOSharePreferenceImpl._();
+  UserDAOSharePreferenceImpl._() {
+    _userStream.sink.add(getUser);
+  }
 
   static final UserDAOSharePreferenceImpl _singleton =
       UserDAOSharePreferenceImpl._();
@@ -19,16 +21,19 @@ class UserDAOSharePreferenceImpl extends UserDAO {
   Stream<UserVO?> get getUserStream => _userStream.stream;
 
   @override
-  void save(UserVO userVO, {bool isAddedUserStream = false}) {
+  void save(UserVO userVO) {
     PrefInstance.getSharedPreferences.setString(kUserKey, jsonEncode(userVO));
+    _userStream.sink.add(userVO);
   }
 
   @override
-  UserVO? getUser([int? id]) {
+  UserVO? get getUser {
     final userData = PrefInstance.getSharedPreferences.getString(kUserKey);
     if (userData != null) {
       return UserVO.fromJson(jsonDecode(userData.toString()));
     }
     return null;
   }
+
+  void closeStream() => _userStream.close();
 }

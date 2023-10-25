@@ -17,13 +17,13 @@ class _UserPageState extends State<UserPage> {
 
   @override
   void initState() {
-    _userModel.saveUserWithAsync(isUsedSharePreferences: true);
+    _userModel.saveUserWithAsync();
     super.initState();
   }
 
   @override
   void dispose() {
-    //   _userModel.closeStream();
+    _userModel.closeStream();
     super.dispose();
   }
 
@@ -89,13 +89,7 @@ class _UserPageState extends State<UserPage> {
                 stream: _userModel.getUserStream,
                 builder: (_, snapShot) {
                   if (snapShot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                        child: Text(
-                      _userModel.getUser != null
-                          ? _userModel.getUser.toString()
-                          : '',
-                      style: const TextStyle(color: Colors.black),
-                    ));
+                    return const Center(child: CircularProgressIndicator());
                   }
                   if (snapShot.hasError) {
                     return Center(
